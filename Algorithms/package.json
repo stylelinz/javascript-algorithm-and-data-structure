@@ -1,0 +1,17 @@
+{
+  "name": "js-algo-and-ds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "countUniqueValues.js",
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mocha": "^9.0.0",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.3"
+  }
+}

@@ -1,5 +1,6 @@
+const Queue = require('./stack-and-queue')
 class Graph {
-  constructor () {
+  constructor() {
     this.adjacencyList = {}
   }
 
@@ -25,19 +26,65 @@ class Graph {
     })
     delete this.adjacencyList[vertex]
   }
+
+  dfsRecursive (startVertex) {
+    const visited = {}
+    const { adjacencyList } = this;
+    (function dfs (vertex) {
+      if (!vertex) return null
+      visited[vertex] = true
+      adjacencyList[vertex].forEach(neighbor => {
+        if (!visited[neighbor]) return dfs(neighbor)
+      })
+    }(startVertex))
+
+    return Object.keys(visited)
+  }
+
+  dfsIterative (startVertex) {
+    const visited = {}
+    const { adjacencyList } = this
+    const stack = [startVertex]
+    while (stack.length) {
+      const vertex = stack.pop()
+      if (!visited[vertex]) {
+        visited[vertex] = true
+        stack.push(...adjacencyList[vertex])
+      }
+    }
+    return Object.keys(visited)
+  }
+
+  bfs (startVertex) {
+    const q = new Queue()
+    q.enqueue(startVertex)
+    const visited = {}
+    visited[startVertex] = true
+    while (q.size) {
+      const visit = q.dequeue()
+      this.adjacencyList[visit].forEach(vertex => {
+        if (!visited[vertex]) {
+          visited[vertex] = true
+          q.enqueue(vertex)
+        }
+      })
+    }
+    return Object.keys(visited)
+  }
 }
 
 const g = new Graph()
-g.addVertex('Keelung')
-g.addVertex('Taichill')
-g.addVertex('Trapei')
-g.addVertex('Tokyo')
-g.addVertex('Dallas')
-g.addVertex('Hong Kong')
-g.addEdge('Keelung', 'Trapei')
-g.addEdge('Taichill', 'Trapei')
-g.addEdge('Tokyo', 'Trapei')
-g.addEdge('Dallas', 'Trapei')
-g.addEdge('Dallas', 'Hong Kong')
-g.addEdge('Tokyo', 'Hong Kong')
+g.addVertex('A')
+g.addVertex('B')
+g.addVertex('C')
+g.addVertex('D')
+g.addVertex('E')
+g.addVertex('F')
+g.addEdge('A', 'B')
+g.addEdge('A', 'C')
+g.addEdge('B', 'D')
+g.addEdge('C', 'E')
+g.addEdge('D', 'E')
+g.addEdge('D', 'F')
+g.addEdge('E', 'F')
 g.addVertex('Tyan')
